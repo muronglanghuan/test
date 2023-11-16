@@ -351,38 +351,27 @@ void SingleLinkedListMenu() {
     } while (choice != 5);
 }
 
-void delx(linklist** head, int x) {
-    if (*head == NULL) return;
+void delx(linklist * head, int x) {
 
-    linklist *temp = *head, *prev;
-    if (temp->data == x) {
-        if (temp->next == *head) {
-            free(temp);
-            *head = NULL;
-            return;
+    if (head == NULL) return;
+    linklist *temp = head;
+    linklist *q=temp->next;
+    do {
+        if (q->data == x){
+            temp->next=q->next;
+            free(q);
+            q=temp->next;
+
         }
-        prev = temp;
-        while (prev->next != *head) prev = prev->next;
-        *head = temp->next;
-        prev->next = *head;
-        free(temp);
-        return;
-    }
-
-    while (temp->next != *head && temp->next->data != x) {
         temp = temp->next;
-    }
-    if (temp->next->data == x) {
-        linklist* next = temp->next->next;
-        free(temp->next);
-        temp->next = next;
-    }
+        q=q->next;
+
+    } while (temp != head);
+
 }
 
 void add_after(linklist* head, int x, int new_data) {
     if (head == NULL) return;
-
-    int count = 0; // 用于记录节点的位置
     linklist* temp = head;
     do {
         if (temp->data == x) {
@@ -429,9 +418,6 @@ void add_before(linklist* head, int x, int new_data) {
 
     } while (temp != head);
 
-    
-
-    
 }
 
 void findx(linklist* head, int x) {
