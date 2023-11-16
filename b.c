@@ -379,16 +379,6 @@ void delx(linklist** head, int x) {
     }
 }
 
-linklist* find_node(linklist* head, int x) {
-    if (head == NULL) return NULL;
-    linklist* temp = head;
-    do {
-        if (temp->data == x) return temp;
-        temp = temp->next;
-    } while (temp != head);
-    return NULL;
-}
-
 void add_after(linklist* head, int x, int new_data) {
     if (head == NULL) return;
 
