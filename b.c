@@ -278,7 +278,7 @@ void SequentialListMenu() {
             printf("按任意键继续");getchar();getchar();break;
         case 4:
             if(i==0){
-                printf("未初始化，请重新选择");
+                
                 break;
             }
             printf("返回上一菜单。\n");
@@ -390,35 +390,58 @@ linklist* find_node(linklist* head, int x) {
 }
 
 void add_after(linklist* head, int x, int new_data) {
-    linklist* current = find_node(head, x);
-    if (current == NULL) return;
+    if (head == NULL) return;
 
-    linklist* new_node = (linklist*)malloc(sizeof(linklist));
-    new_node->data = new_data;
-    new_node->next = current->next;
-    current->next = new_node;
+    int count = 0; // 用于记录节点的位置
+    linklist* temp = head;
+    do {
+        if (temp->data == x) {
+            linklist* current = temp;
+            linklist* new_node = (linklist*)malloc(sizeof(linklist));
+            new_node->data = new_data;
+            new_node->next = current->next;
+            current->next = new_node;
+        }
+        temp = temp->next;
+
+    } while (temp != head);
+    
+    
 }
 
 void add_before(linklist* head, int x, int new_data) {
-    linklist* current = find_node(head, x);
-    if (current == NULL) return;
 
-    linklist* new_node = (linklist*)malloc(sizeof(linklist));
-    new_node->data = new_data;
+    if (head == NULL) return;
+    linklist* temp = head;
+    do {
+        if (temp->data == x) {
+            linklist* current = temp;
+            
+            linklist* new_node = (linklist*)malloc(sizeof(linklist));
+            new_node->data = new_data;
+    
+            if (head == current) {
+                new_node->next = head;
+                // 查找最后一个节点，将其 next 指向 new_node
+                linklist* last = head;
+                while (last->next != head) last = last->next;
+                last->next = new_node;
+                head = new_node;
+            } else {
+                linklist* prev = head;
+                while (prev->next != current) prev = prev->next;
+                prev->next = new_node;
+                new_node->next = current;
+            }
 
-    if (head == current) {
-        new_node->next = head;
-        // 查找最后一个节点，将其 next 指向 new_node
-        linklist* last = head;
-        while (last->next != head) last = last->next;
-        last->next = new_node;
-        head = new_node;
-    } else {
-        linklist* prev = head;
-        while (prev->next != current) prev = prev->next;
-        prev->next = new_node;
-        new_node->next = current;
-    }
+        }
+        temp = temp->next;
+
+    } while (temp != head);
+
+    
+
+    
 }
 
 void findx(linklist* head, int x) {
@@ -431,6 +454,7 @@ void findx(linklist* head, int x) {
             printf("第%d个节点的值为%d\n", count, x);
         }
         temp = temp->next;
+
         count++;
     } while (temp != head);
 }
@@ -484,7 +508,7 @@ void CircularLinkedListMenu() {
             }
             printf("输入前插入节点的节点值与要插入的节点的值:");
             scanf("%d %d",&keyx,&new);
-            add_after(head,keyx,new);
+            add_before(head,keyx,new);
             print(head);// 在值为x的节点前面插入新节点
             printf("按任意键继续");getchar();getchar();break;
         case 5:
