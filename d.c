@@ -129,10 +129,6 @@ void qt(dl*c){
     printf("队头元素为%d\n",c->a[(c->head)%max]);
 }
 
-#include <stdio.h>
-
-// 你的结构定义和函数声明...
-
 int main() {
     int choice, data;
     qu stack;
