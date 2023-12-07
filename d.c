@@ -14,13 +14,20 @@ void  csh(qu*s){
     int x;
     scanf("%d",&x);
     
-    s->top=0;
+    int top=0;
+    while (x!=0&&top!=max){
+        s->a[top]=x;
+        top++;
+        scanf("%d",&x);
+        if(top==max){
+            printf("栈已满");
+            break;
+        }
+    }
+    s->top=top-1;
     while (x!=0){
-        s->a[s->top]=x;
-        s->top++;
         scanf("%d",&x);
     }
-    cz(s);
 }
 
 void cz(qu*s){
@@ -86,6 +93,9 @@ void cs(dl*c){
         }
         else c->rear++;
 
+        scanf("%d",&x);
+    }
+    while(x!=0){
         scanf("%d",&x);
     }
 
